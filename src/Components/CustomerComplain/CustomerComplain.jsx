@@ -1,44 +1,51 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
+import { db } from '../../Services/firebase.config'
+import { collection, onSnapshot, doc, addDoc, deleteDoc } from "firebase/firestore"
+
 import "./CustomerComplain.css";
 const CustomerComplain = () => {
   const [addComplainBtnState, setAddComplainBtnState] = useState(false);
   const [complain, setComplain] = useState(
     {
-      Complained_Date: "",
-      Description: "",
-      Status: "Not Reviewed",
-      Title: "",
-      User_Id: "CUS-0001",
-      User_Type: "Cus"
+      complained_Date: "",
+      description: "",
+      status: "Not Reviewed",
+      title: "",
+      user_Id: "CUS-0001",
+      user_Type: "Cus"
     }
 );
-
   const [currentTime, setCurrentTime]=useState("2021.01.03-10:53:34");
 
-  
+  const complainCollectionRef = collection(db,"ComplainCollection");
   const handleSubmit = e =>{
     e.preventDefault()
      
 
     if(
-        !complain.Title||
-        !complain.Description
+        !complain.title||
+        !complain.description
 
     ){
         alert("Please fill out all fields")
       return
-    }else{
-        console.log(complain);
-        setComplain({
-            Complained_Date: "",
-            Description: "",
-            Status: "Not Reviewed",
-            Title: "",
-            User_Id: "CUS-0001",
-            User_Type: "Cus"
-          })
     }
+        console.log(complain);
+        addDoc(complainCollectionRef, complain);
+        setComplain({
+            complained_Date: "",
+            description: "",
+            status: "Not Reviewed",
+            title: "",
+            user_Id: "CUS-0001",
+            user_Type: "Cus"
+          })
+
+          alert("Data sent succecfully")
+          setAddComplainBtnState(!addComplainBtnState);
+
+    
 
   }
 
@@ -55,24 +62,24 @@ const CustomerComplain = () => {
             </Button>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form className="form-card" onSubmit={handleSubmit}>
             <h1 className="complain-title">Add Complain</h1>
 
             <div className="form-group">
               <label className="form-label">Subject</label>
-              <input type="text" vlaue={complain.Title} 
-              onChange = {e => setComplain({...complain, Title: e.target.value})}/>
+              <input type="text" vlaue={complain.title} 
+              onChange = {e => setComplain({...complain, title: e.target.value})}/>
             </div>
 
             <div className="form-group">
               <label className="form-label">Description</label>
               <input type="text" vlaue={complain.Description} 
-              onChange = {e => setComplain({...complain, Description: e.target.value})}/>
+              onChange = {e => setComplain({...complain, description: e.target.value})}/>
             </div>
 
             <div className="form-group">
-            <Button type = "submit" onClick={()=> setComplain({...complain, Complained_Date: currentTime})} variant="primary">Primary</Button>
-            </div>
+            <Button type = "submit" onClick={()=> setComplain({...complain, complained_Date: currentTime})} variant="primary">Primary</Button>
+            </div>  
             
             
           </form>
