@@ -1,9 +1,10 @@
 import React from 'react'
+import AdminComplain from '../Components/AdminComplain/AdminComplain'
 
 const AdminPage = () => {
   return (
     <div>
-      Admin
+      <AdminComplain/>
     </div>
   )
 }
