@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import { db } from "../../Services/firebase.config";
 import {
   collection,
   onSnapshot,
   doc,
-  addDoc,
-  deleteDoc,
   updateDoc,
 } from "firebase/firestore";
 
@@ -40,6 +37,7 @@ const AdminComplain = () => {
   
   function handleShow(element) {
     setShow(true);
+    markReviewedComplain(element);
   }
 
   const complainCollectionRef = collection(db, "ComplainCollection");
@@ -130,7 +128,7 @@ const AdminComplain = () => {
                       <td>{element.complained_Date}</td>
                       <td>{element.title}</td>
                       <td>{element.description}</td>
-                      <td>{element.status}</td>
+                      {element.status ? "Reviewed" : "Not Reviewed Yet"}
                       <td>
                         <Button
                           variant="primary"

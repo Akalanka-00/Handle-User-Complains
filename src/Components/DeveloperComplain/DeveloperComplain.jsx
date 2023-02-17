@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { db } from '../../Services/firebase.config'
-import { collection, onSnapshot, doc, addDoc, deleteDoc } from "firebase/firestore"
+import { collection, addDoc } from "firebase/firestore"
 
 import "./DeveloperComplain.css";
 const DeveloperComplain = () => {
@@ -16,7 +16,6 @@ const DeveloperComplain = () => {
       user_Type: "Dev"
     }
 );
-  const [currentTime, setCurrentTime]=useState();
 
   const complainCollectionRef = collection(db,"ComplainCollection");
   const handleSubmit = e =>{
@@ -95,7 +94,6 @@ const DeveloperComplain = () => {
                     ":" +
                     today.getSeconds();
                   console.log(time);
-                  setCurrentTime(time);
                   setComplain({ ...complain, complained_Date: time });
                 }}
                 variant="primary"

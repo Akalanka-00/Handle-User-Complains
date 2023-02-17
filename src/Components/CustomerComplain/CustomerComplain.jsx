@@ -3,13 +3,11 @@ import Button from "react-bootstrap/Button";
 import { db } from "../../Services/firebase.config";
 import {
   collection,
-  onSnapshot,
-  doc,
   addDoc,
-  deleteDoc,
 } from "firebase/firestore";
 
 import "./CustomerComplain.css";
+
 const CustomerComplain = () => {
   const [addComplainBtnState, setAddComplainBtnState] = useState(false);
   const [complain, setComplain] = useState({
@@ -20,11 +18,9 @@ const CustomerComplain = () => {
     user_Id: "CUS-0001",
     user_Type: "Cus",
   });
-  const [currentTime, setCurrentTime] = useState("");
-
-
 
   const complainCollectionRef = collection(db, "ComplainCollection");
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -60,7 +56,7 @@ const CustomerComplain = () => {
             </Button>
           </div>
 
-          <form className="form-card" onSubmit={handleSubmit}>
+          <form className="form-card" onSubmit={handleSubmit}>s
             <h1 className="complain-title">Add Complain</h1>
 
             <div className="form-group">
@@ -74,7 +70,7 @@ const CustomerComplain = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group" >
               <label className="form-label">Description</label>
               <input
                 type="text"
@@ -103,7 +99,6 @@ const CustomerComplain = () => {
                     ":" +
                     today.getSeconds();
                   console.log(time);
-                  setCurrentTime(time);
                   setComplain({ ...complain, complained_Date: time });
                 }}
                 variant="primary"
