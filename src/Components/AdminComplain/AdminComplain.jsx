@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { db } from "../../Services/firebase.config";
 import {
   collection,
@@ -9,7 +11,6 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import Button from "react-bootstrap/Button";
 
 import "./AdminComplain.css";
 const AdminComplain = () => {
@@ -33,6 +34,14 @@ const AdminComplain = () => {
     user_Id: "CUS-0001",
     user_Type: "Cus",
   });
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  
+  function handleShow(element) {
+    setShow(true);
+  }
+
   const complainCollectionRef = collection(db, "ComplainCollection");
 
   function markReviewedComplain(element) {
@@ -125,7 +134,7 @@ const AdminComplain = () => {
                       <td>
                         <Button
                           variant="primary"
-                          onClick={() => markReviewedComplain(element)}
+                          onClick={() => handleShow(element)}
                         >
                           Review
                         </Button>

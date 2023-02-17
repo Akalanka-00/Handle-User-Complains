@@ -1,50 +1,52 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { db } from "../../Services/firebase.config";
-import {
-  collection,
-  onSnapshot,
-  doc,
-  addDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { db } from '../../Services/firebase.config'
+import { collection, onSnapshot, doc, addDoc, deleteDoc } from "firebase/firestore"
 
-import "./CustomerComplain.css";
-const CustomerComplain = () => {
+import "./DeveloperComplain.css";
+const DeveloperComplain = () => {
   const [addComplainBtnState, setAddComplainBtnState] = useState(false);
-  const [complain, setComplain] = useState({
-    complained_Date: "",
-    description: "",
-    status: false,
-    title: "",
-    user_Id: "CUS-0001",
-    user_Type: "Cus",
-  });
-  const [currentTime, setCurrentTime] = useState("");
-
-
-
-  const complainCollectionRef = collection(db, "ComplainCollection");
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!complain.title || !complain.description) {
-      alert("Please fill out all fields");
-      return;
-    }
-    console.log(complain);
-    addDoc(complainCollectionRef, complain);
-    setComplain({
+  const [complain, setComplain] = useState(
+    {
       complained_Date: "",
       description: "",
       status: false,
       title: "",
-      user_Id: "CUS-0001",
-      user_Type: "Cus",
-    });
+      user_Id: "Dev-0001",
+      user_Type: "Dev"
+    }
+);
+  const [currentTime, setCurrentTime]=useState();
 
-    alert("Data sent succecfully");
-    setAddComplainBtnState(!addComplainBtnState);
+  const complainCollectionRef = collection(db,"ComplainCollection");
+  const handleSubmit = e =>{
+    e.preventDefault()
+     
+
+    if(
+        !complain.title||
+        !complain.description
+
+    ){
+        alert("Please fill out all fields")
+      return
+    }
+        console.log(complain);
+        addDoc(complainCollectionRef, complain);
+        setComplain({
+            complained_Date: "",
+            description: "",
+            status: false,
+            title: "",
+            user_Id: "Dev-0001",
+            user_Type: "Dev"
+          })
+
+          alert("Data sent succecfully")
+          setAddComplainBtnState(!addComplainBtnState);
+
+    
+
   }
 
   return (
@@ -65,28 +67,18 @@ const CustomerComplain = () => {
 
             <div className="form-group">
               <label className="form-label">Subject</label>
-              <input
-                type="text"
-                vlaue={complain.title}
-                onChange={(e) =>
-                  setComplain({ ...complain, title: e.target.value })
-                }
-              />
+              <input type="text" vlaue={complain.title} 
+              onChange = {e => setComplain({...complain, title: e.target.value})}/>
             </div>
 
             <div className="form-group">
               <label className="form-label">Description</label>
-              <input
-                type="text"
-                vlaue={complain.description}
-                onChange={(e) =>
-                  setComplain({ ...complain, description: e.target.value })
-                }
-              />
+              <input type="text" vlaue={complain.description} 
+              onChange = {e => setComplain({...complain, description: e.target.value})}/>
             </div>
 
             <div className="form-group">
-              <Button
+            <Button
                 type="submit"
                 onClick={() => {
                   const today = new Date();
@@ -109,8 +101,9 @@ const CustomerComplain = () => {
                 variant="primary"
               >
                 Submit
-              </Button>
-            </div>
+              </Button>            </div>  
+            
+            
           </form>
         </div>
       ) : (
@@ -127,4 +120,4 @@ const CustomerComplain = () => {
   );
 };
 
-export default CustomerComplain;
+export default DeveloperComplain;
